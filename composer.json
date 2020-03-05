@@ -1,0 +1,24 @@
+{
+    "name": "saulius/commissionfee",
+    "description": "Sandbox to play around",
+    "type": "library",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Saulius",
+            "email": "saulius.stasiukaitis@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7"
+    },
+    "autoload": {
+        "psr-4": {
+            "CommissionFee\\": "src/"
+        }
+    }
+}
