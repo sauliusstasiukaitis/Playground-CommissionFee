@@ -11,17 +11,46 @@ namespace CommissionFee;
 
 class Operation
 {
+    private OperationType $operationType;
+    private float $amount;
+    private Currency $currency;
 
     /**
-     * Operation constructor.
      * @param OperationType $operationType
-     * @param float $param
-     * @param Currency $param1
+     * @param float $amount
+     * @param Currency $currency
      */
     public function __construct(
         OperationType $operationType,
-        float $param,
-        Currency $param1
+        float $amount,
+        Currency $currency
     ) {
+        $this->operationType = $operationType;
+        $this->currency = $currency;
+        $this->amount = $amount;
+    }
+
+    /**
+     * @return OperationType
+     */
+    public function getOperationType(): OperationType
+    {
+        return $this->operationType;
+    }
+
+    /**
+     * @return float
+     */
+    public function getAmount(): float
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @return Currency
+     */
+    public function getCurrency(): Currency
+    {
+        return $this->currency;
     }
 }
