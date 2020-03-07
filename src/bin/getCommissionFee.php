@@ -6,36 +6,31 @@
  * Time: 19.10
  */
 
-namespace CommissionFee;
+require_once __DIR__. '/../../vendor/autoload.php';
 
-require_once '../../vendor/autoload.php';
+if (!isset($argv[1])) {
+    throw new \Exception('Pass input file path as a parameter!');
+}
 
-$defaultCurrency = new Currency('EUR');
+$inputFilePath = $argv[1];
 
-// @ToDo: extract from file.
-$currency = new Currency('EUR');
-$amount = 1200.00;
-$dateInput = '2014-12-31';
-$userIdInput = 4;
-$userTypeInput = 'natural';
-$operationTypeInput = 'cash_out';
+if (!is_file($inputFilePath)) {
+    throw new \Exception('Input file path parameter leads nowhere...');
+}
 
-$date = strtotime($dateInput);
-$user = new User($userIdInput, $userTypeInput);
+$fileStream = fopen($inputFilePath, 'r');
 
-$operationTypeFactory = new OperationTypeFactory();
-$operationType = $operationTypeFactory->build($operationTypeInput);
+if ($fileStream === false) {
+    throw new \Exception('Not possible to open file for read!');
+}
 
-$operation = new Operation(
-    $operationType,
-    $amount,
-    $currency
+$commissionFeeCalculator = new \CommissionFee\CommissionFeeCalculator(
+    new \CommissionFee\ParametersToObjectsFactory(),
+    new \CommissionFee\CommissionFeeContextFactory(),
+    new \CommissionFee\CommisssionFeeCalculateStrategy\StrategyFactory(),
+    new \CommissionFee\Currency('EUR'),
+    new \CommissionFee\UserDataRepository()
 );
+$commissionFeeList = $commissionFeeCalculator->calculate($fileStream);
 
-$commissionFeeCalculator = new CommissionFeeContext(
-    $date,
-    $user,
-    $operation,
-    $defaultCurrency
-);
-$commissionFee = $commissionFeeCalculator->calculate();
+echo implode(PHP_EOL, $commissionFeeList);

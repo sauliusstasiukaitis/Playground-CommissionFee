@@ -15,6 +15,7 @@ class CommissionFeeContext
     private int $dateTimeStamp;
     private User $user;
     private Operation $operation;
+    private UserDataRepository $userData;
 
     /**
      * CommissionFeeCalculator constructor dependent on context chooses correct strategy to
@@ -27,11 +28,13 @@ class CommissionFeeContext
     public function __construct(
         int $dateTimeStamp,
         User $user,
-        Operation $operations
+        Operation $operations,
+        UserDataRepository $userData
     ) {
         $this->dateTimeStamp = $dateTimeStamp;
         $this->user = $user;
         $this->operation = $operations;
+        $this->userData = $userData;
     }
 
     public function getDateTimeStamp(): int
@@ -47,5 +50,10 @@ class CommissionFeeContext
     public function getOperation(): Operation
     {
         return $this->operation;
+    }
+
+    public function getUserData(): UserDataRepository
+    {
+        return $this->userData;
     }
 }

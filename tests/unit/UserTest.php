@@ -1,5 +1,6 @@
 <?php
 
+namespace CommissionFeeTest\Unit;
 
 use CommissionFee\User;
 use PHPUnit\Framework\TestCase;

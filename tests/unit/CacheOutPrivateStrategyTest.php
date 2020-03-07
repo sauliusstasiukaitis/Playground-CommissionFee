@@ -1,6 +1,6 @@
 <?php
 
-namespace CommissionFeeTest;
+namespace CommissionFeeTest\Unit;
 
 use CommissionFee\CommisssionFeeCalculateStrategy\CacheOutPrivateStrategy;
 use CommissionFee\Currency;

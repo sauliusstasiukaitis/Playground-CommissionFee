@@ -27,6 +27,11 @@ class User
         $this->userType = $userType;
     }
 
+    public function getId()
+    {
+        return $this->userId;
+    }
+
     public function isCompany()
     {
         return $this->userType === self::USER_TYPE_COMPANY;

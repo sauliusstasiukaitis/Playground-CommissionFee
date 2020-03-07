@@ -1,5 +1,7 @@
 <?php
 
+namespace CommissionFeeTest\Unit;
+
 use CommissionFee\Operation\OperationTypeCashIn;
 use CommissionFee\Operation\OperationTypeCashOut;
 use CommissionFee\ParametersToObjects;

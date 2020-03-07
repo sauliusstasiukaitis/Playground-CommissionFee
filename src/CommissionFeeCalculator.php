@@ -10,17 +10,20 @@ class CommissionFeeCalculator
     private CommissionFeeContextFactory $commissionFeeContextBuilder;
     private StrategyFactory $strategyFactory;
     private Currency $defaultCurrency;
+    private UserDataRepository $userData;
 
     public function __construct(
         ParametersToObjectsFactory $parametersToObjectsBuilder,
         CommissionFeeContextFactory $commissionFeeContextBuilder,
         StrategyFactory $strategyFactory,
-        Currency $defaultCurrency
+        Currency $defaultCurrency,
+        UserDataRepository $userData
     ) {
         $this->parametersToObjectsBuilder = $parametersToObjectsBuilder;
         $this->commissionFeeContextBuilder = $commissionFeeContextBuilder;
         $this->strategyFactory = $strategyFactory;
         $this->defaultCurrency = $defaultCurrency;
+        $this->userData = $userData;
     }
 
     /**
@@ -34,14 +37,19 @@ class CommissionFeeCalculator
         $commissionFeeList = [];
 
         while (!feof($inputFile)) {
-            $line = fgets($inputFile);
+            $line = trim(fgets($inputFile));
+
+            if (empty($line)) {
+                continue;
+            }
 
             $parametersToObject = $this->parametersToObjectsBuilder->create($line);
 
             $context = $this->commissionFeeContextBuilder->create(
                 $parametersToObject->getDate(),
                 $parametersToObject->getUser(),
-                $parametersToObject->getOperation()
+                $parametersToObject->getOperation(),
+                $this->userData
             );
 
             $strategy = $this->strategyFactory->create($context);

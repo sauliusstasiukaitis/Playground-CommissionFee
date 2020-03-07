@@ -4,24 +4,59 @@ namespace CommissionFee\CommisssionFeeCalculateStrategy;
 
 use CommissionFee\CommissionFeeContext;
 use CommissionFee\Operation\OperationTypeCashIn;
+use CommissionFee\UserDataRepository;
 
 class StrategyFactory
 {
-    /**
-     * @ToDo: implement cache out for 4th and upcoming times.
-     */
+    const USER_CACHE_OUT_AMOUNT_LIMIT = 1000;
+    const USER_FREE_CASH_OUT_LIMIT = 3;
+
     public function create(CommissionFeeContext $context): CommissionFeeStrategyInterface
     {
-        $operationType = $context->getOperation()->getOperationType();
+        $operation = $context->getOperation();
+        $operationType = $operation->getOperationType();
 
         if ($operationType instanceof OperationTypeCashIn) {
             return new CacheInStrategy();
         }
 
-        if ($context->getUser()->isCompany()) {
+        $user = $context->getUser();
+        if ($user->isCompany()) {
             return new CacheOutCompanyStrategy();
         }
 
-        return new CacheOutPrivateStrategy();
+        $userData = $context->getUserData();
+        $userTransactionList = $userData->getDataByUserId($user->getId());
+
+        if (!is_null($userTransactionList) && count($userTransactionList) >= static::USER_FREE_CASH_OUT_LIMIT) {
+            $strategy = new CacheOutPrivateStrategyAfterLimit();
+        } else {
+            $userTransactionsSum = $this->calculateUserTransactionSum($userTransactionList);
+
+            if ($userTransactionsSum > static::USER_CACHE_OUT_AMOUNT_LIMIT) {
+                $strategy = new CacheOutPrivateStrategyAfterLimit();
+            } else {
+                $strategy = new CacheOutPrivateStrategy();
+            }
+        }
+
+        $userData->addEntry($user, $operation->getAmount(), $context->getDateTimeStamp());
+
+        return $strategy;
+    }
+
+    private function calculateUserTransactionSum(?array $userTransactionList)
+    {
+        $amount = 0;
+
+        if (is_null($userTransactionList)) {
+            return $amount;
+        }
+
+        foreach ($userTransactionList as $userTransaction) {
+            $amount += $userTransaction[UserDataRepository::AMOUNT];
+        }
+
+        return $amount;
     }
 }
