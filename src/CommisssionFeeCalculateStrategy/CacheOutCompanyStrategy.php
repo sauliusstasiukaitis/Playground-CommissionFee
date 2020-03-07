@@ -11,10 +11,6 @@ class CacheOutCompanyStrategy implements CommissionFeeStrategyInterface
 
     private Operation $operation;
 
-    /**
-     * CachInStrategy constructor.
-     * @param $operation
-     */
     public function __construct(Operation $operation)
     {
         $this->operation = $operation;
