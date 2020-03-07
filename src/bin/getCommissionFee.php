@@ -20,7 +20,6 @@ $userIdInput = 4;
 $userTypeInput = 'natural';
 $operationTypeInput = 'cash_out';
 
-// @ToDo: extract to a class which would load needed objects from a strings.
 $date = strtotime($dateInput);
 $user = new User($userIdInput, $userTypeInput);
 
@@ -33,10 +32,10 @@ $operation = new Operation(
     $currency
 );
 
-$commitionFeeCalculator = new CommitionFeeCalculatorContext(
+$commissionFeeCalculator = new CommissionFeeContext(
     $date,
     $user,
     $operation,
     $defaultCurrency
 );
-$commissionFee = $commitionFeeCalculator->calculate();
+$commissionFee = $commissionFeeCalculator->calculate();
