@@ -4,7 +4,7 @@ namespace CommissionFee\CommisssionFeeCalculateStrategy;
 
 use CommissionFee\Operation\Operation;
 
-class CacheInCommissionFeeStrategy extends CommissionFeeStrategy
+class CacheInStrategy extends CommissionFeeStrategy
 {
     const MAX_COMMISSION = 5.0;
 

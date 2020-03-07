@@ -2,13 +2,13 @@
 
 namespace CommissionFeeTest;
 
-use CommissionFee\CommisssionFeeCalculateStrategy\CacheInCommissionFeeStrategy;
+use CommissionFee\CommisssionFeeCalculateStrategy\CacheInStrategy;
 use CommissionFee\Currency;
 use CommissionFee\Operation\Operation;
 use CommissionFee\Operation\OperationTypeCashIn;
 use PHPUnit\Framework\TestCase;
 
-class CacheInCommissionFeeStrategyTest extends TestCase
+class CacheInStrategyTest extends TestCase
 {
     public function providerCalculateRegularFee()
     {
@@ -30,7 +30,7 @@ class CacheInCommissionFeeStrategyTest extends TestCase
             $amount,
             new Currency('EUR')
         );
-        $strategy = new CacheInCommissionFeeStrategy();
+        $strategy = new CacheInStrategy();
 
         $this->assertSame(
             $strategy->calculate($operation),
@@ -45,8 +45,8 @@ class CacheInCommissionFeeStrategyTest extends TestCase
             1000000000000000,
             new Currency('EUR')
         );
-        $strategy = new CacheInCommissionFeeStrategy();
+        $strategy = new CacheInStrategy();
 
-        $this->assertSame($strategy->calculate($operation), CacheInCommissionFeeStrategy::MAX_COMMISSION);
+        $this->assertSame($strategy->calculate($operation), CacheInStrategy::MAX_COMMISSION);
     }
 }
