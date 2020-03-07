@@ -11,10 +11,6 @@ class CacheInCommissionFeeStrategy implements CommissionFeeStrategyInterface
     const COMMISSION_FEE_PERCENT = 0.003;
     const MAX_COMMISSION = 5.0;
 
-    /**
-     * CachInStrategy constructor.
-     * @param $operation
-     */
     public function __construct(Operation $operation)
     {
         $this->operation = $operation;
