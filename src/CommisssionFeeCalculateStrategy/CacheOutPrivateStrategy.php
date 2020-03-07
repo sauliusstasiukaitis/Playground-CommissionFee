@@ -9,16 +9,9 @@ class CacheOutPrivateStrategy implements CommissionFeeStrategyInterface
     const COMMISSION_FEE_PERCENT = 0.003;
     const MIN_FEEABLE_AMOUNT = 1000;
 
-    private Operation $operation;
-
-    public function __construct(Operation $operation)
+    public function calculate(Operation $operation): float
     {
-        $this->operation = $operation;
-    }
-
-    public function calculate(): float
-    {
-        $amount = $this->operation->getAmount();
+        $amount = $operation->getAmount();
 
         if ($amount <= self::MIN_FEEABLE_AMOUNT) {
             return 0.0;

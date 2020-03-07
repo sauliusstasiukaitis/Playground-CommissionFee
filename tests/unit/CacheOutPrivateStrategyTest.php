@@ -1,5 +1,7 @@
 <?php
 
+namespace CommissionFeeTest;
+
 use CommissionFee\CommisssionFeeCalculateStrategy\CacheOutPrivateStrategy;
 use CommissionFee\Currency;
 use CommissionFee\Operation\Operation;
@@ -28,10 +30,10 @@ class CacheOutPrivateStrategyTest extends TestCase
             $amount,
             new Currency('EUR')
         );
-        $strategy = new CacheOutPrivateStrategy($operation);
+        $strategy = new CacheOutPrivateStrategy();
 
         $this->assertSame(
-            $strategy->calculate(),
+            $strategy->calculate($operation),
             0.0,
             "Should be 0 for a sum below threshold for amount: ". $amount
         );
@@ -56,10 +58,10 @@ class CacheOutPrivateStrategyTest extends TestCase
             $amount,
             new Currency('EUR')
         );
-        $strategy = new CacheOutPrivateStrategy($operation);
+        $strategy = new CacheOutPrivateStrategy();
 
         $this->assertSame(
-            $strategy->calculate(),
+            $strategy->calculate($operation),
             $expectedFee,
             "Commissions for cash in above 1000 - 0.3% therefore for ". $amount . " should be ". $expectedFee
         );

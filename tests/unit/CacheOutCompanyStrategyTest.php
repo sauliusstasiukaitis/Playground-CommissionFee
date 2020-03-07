@@ -17,9 +17,9 @@ class CacheOutCompanyStrategyTest extends TestCase
             1,
             new Currency('EUR')
         );
-        $strategy = new CacheOutCompanyStrategy($operation);
+        $strategy = new CacheOutCompanyStrategy();
 
-        $this->assertSame($strategy->calculate(), CacheOutCompanyStrategy::MIN_COMMISSION);
+        $this->assertSame($strategy->calculate($operation), CacheOutCompanyStrategy::MIN_COMMISSION);
     }
     public function providerCalculateRegularFee()
     {
@@ -41,10 +41,10 @@ class CacheOutCompanyStrategyTest extends TestCase
             $amount,
             new Currency('EUR')
         );
-        $strategy = new CacheOutCompanyStrategy($operation);
+        $strategy = new CacheOutCompanyStrategy();
 
         $this->assertSame(
-            $strategy->calculate(),
+            $strategy->calculate($operation),
             $expectedFee,
             "Commissions for cash out - 0.3% therefore for ". $amount . " should be ". $expectedFee
         );

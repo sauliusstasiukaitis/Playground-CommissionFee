@@ -30,10 +30,10 @@ class CacheInCommissionFeeStrategyTest extends TestCase
             $amount,
             new Currency('EUR')
         );
-        $strategy = new CacheInCommissionFeeStrategy($operation);
+        $strategy = new CacheInCommissionFeeStrategy();
 
         $this->assertSame(
-            $strategy->calculate(),
+            $strategy->calculate($operation),
             $expectedFee,
             "Commissions for cash in - 0.3% therefore for ". $amount . " should be ". $expectedFee
         );
@@ -45,8 +45,8 @@ class CacheInCommissionFeeStrategyTest extends TestCase
             1000000000000000,
             new Currency('EUR')
         );
-        $strategy = new CacheInCommissionFeeStrategy($operation);
+        $strategy = new CacheInCommissionFeeStrategy();
 
-        $this->assertSame($strategy->calculate(), CacheInCommissionFeeStrategy::MAX_COMMISSION);
+        $this->assertSame($strategy->calculate($operation), CacheInCommissionFeeStrategy::MAX_COMMISSION);
     }
 }

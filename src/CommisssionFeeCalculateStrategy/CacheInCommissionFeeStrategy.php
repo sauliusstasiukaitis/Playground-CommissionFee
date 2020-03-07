@@ -6,19 +6,12 @@ use CommissionFee\Operation\Operation;
 
 class CacheInCommissionFeeStrategy implements CommissionFeeStrategyInterface
 {
-    private Operation $operation;
-
     const COMMISSION_FEE_PERCENT = 0.003;
     const MAX_COMMISSION = 5.0;
 
-    public function __construct(Operation $operation)
+    public function calculate(Operation $operation): float
     {
-        $this->operation = $operation;
-    }
-
-    public function calculate(): float
-    {
-        $amount = $this->operation->getAmount();
+        $amount = $operation->getAmount();
 
         $fee = $amount * self::COMMISSION_FEE_PERCENT;
 
