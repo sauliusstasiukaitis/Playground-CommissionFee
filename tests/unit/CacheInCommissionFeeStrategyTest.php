@@ -4,8 +4,8 @@ namespace CommissionFeeTest;
 
 use CommissionFee\CacheInCommissionFeeStrategy;
 use CommissionFee\Currency;
-use CommissionFee\Operation;
-use CommissionFee\OperationTypeCashIn;
+use CommissionFee\Operation\Operation;
+use CommissionFee\Operation\OperationTypeCashIn;
 use PHPUnit\Framework\TestCase;
 
 class CacheInCommissionFeeStrategyTest extends TestCase

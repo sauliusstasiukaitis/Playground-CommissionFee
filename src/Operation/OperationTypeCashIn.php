@@ -6,9 +6,8 @@
  * Time: 21.21
  */
 
-namespace CommissionFee;
+namespace CommissionFee\Operation;
 
-
-class OperationTypeCashOut extends OperationType
+class OperationTypeCashIn extends OperationType
 {
 }

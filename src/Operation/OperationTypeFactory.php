@@ -6,8 +6,7 @@
  * Time: 21.19
  */
 
-namespace CommissionFee;
-
+namespace CommissionFee\Operation;
 
 class OperationTypeFactory
 {

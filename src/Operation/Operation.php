@@ -6,8 +6,9 @@
  * Time: 21.30
  */
 
-namespace CommissionFee;
+namespace CommissionFee\Operation;
 
+use CommissionFee\Currency;
 
 class Operation
 {
