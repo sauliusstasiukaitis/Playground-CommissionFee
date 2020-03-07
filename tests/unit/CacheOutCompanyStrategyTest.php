@@ -2,7 +2,7 @@
 
 namespace CommissionFeeTest;
 
-use CommissionFee\CacheOutCompanyStrategy;
+use CommissionFee\CommisssionFeeCalculateStrategy\CacheOutCompanyStrategy;
 use CommissionFee\Currency;
 use CommissionFee\Operation\Operation;
 use CommissionFee\Operation\OperationTypeCashOut;

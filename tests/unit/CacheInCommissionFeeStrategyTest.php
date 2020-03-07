@@ -2,7 +2,7 @@
 
 namespace CommissionFeeTest;
 
-use CommissionFee\CacheInCommissionFeeStrategy;
+use CommissionFee\CommisssionFeeCalculateStrategy\CacheInCommissionFeeStrategy;
 use CommissionFee\Currency;
 use CommissionFee\Operation\Operation;
 use CommissionFee\Operation\OperationTypeCashIn;

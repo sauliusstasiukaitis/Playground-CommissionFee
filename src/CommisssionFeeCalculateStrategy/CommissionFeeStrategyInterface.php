@@ -1,6 +1,6 @@
 <?php
 
-namespace CommissionFee;
+namespace CommissionFee\CommisssionFeeCalculateStrategy;
 
 interface CommissionFeeStrategyInterface
 {

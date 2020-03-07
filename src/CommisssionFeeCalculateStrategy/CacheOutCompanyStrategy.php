@@ -1,15 +1,15 @@
 <?php
 
-namespace CommissionFee;
+namespace CommissionFee\CommisssionFeeCalculateStrategy;
 
 use CommissionFee\Operation\Operation;
 
-class CacheInCommissionFeeStrategy implements CommissionFeeStrategyInterface
+class CacheOutCompanyStrategy implements CommissionFeeStrategyInterface
 {
-    private Operation $operation;
-
+    const MIN_COMMISSION = 0.5;
     const COMMISSION_FEE_PERCENT = 0.003;
-    const MAX_COMMISSION = 5.0;
+
+    private Operation $operation;
 
     /**
      * CachInStrategy constructor.
@@ -26,8 +26,8 @@ class CacheInCommissionFeeStrategy implements CommissionFeeStrategyInterface
 
         $fee = $amount * self::COMMISSION_FEE_PERCENT;
 
-        if ($fee > self::MAX_COMMISSION) {
-            $fee = self::MAX_COMMISSION;
+        if ($fee < self::MIN_COMMISSION) {
+            $fee = self::MIN_COMMISSION;
         }
 
         return $fee;
