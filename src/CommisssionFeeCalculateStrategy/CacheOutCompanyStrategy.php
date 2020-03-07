@@ -12,8 +12,8 @@ class CacheOutCompanyStrategy extends CommissionFeeStrategy
     {
         $fee = parent::calculate($operation);
 
-        if ($fee < self::MIN_COMMISSION) {
-            $fee = self::MIN_COMMISSION;
+        if ($fee < static::MIN_COMMISSION) {
+            $fee = static::MIN_COMMISSION;
         }
 
         return $fee;

@@ -12,8 +12,8 @@ class CacheInCommissionFeeStrategy extends CommissionFeeStrategy
     {
         $fee = parent::calculate($operation);
 
-        if ($fee > self::MAX_COMMISSION) {
-            $fee = self::MAX_COMMISSION;
+        if ($fee > static::MAX_COMMISSION) {
+            $fee = static::MAX_COMMISSION;
         }
 
         return $fee;

@@ -12,7 +12,7 @@ class CacheOutPrivateStrategy extends CommissionFeeStrategy
     {
         $amount = $operation->getAmount();
 
-        if ($amount <= self::MIN_FEEABLE_AMOUNT) {
+        if ($amount <= static::MIN_FEEABLE_AMOUNT) {
             return 0.0;
         }
 
