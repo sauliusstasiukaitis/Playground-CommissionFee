@@ -4,9 +4,8 @@ namespace CommissionFee\CommisssionFeeCalculateStrategy;
 
 use CommissionFee\Operation\Operation;
 
-class CacheOutPrivateStrategy implements CommissionFeeStrategyInterface
+class CacheOutPrivateStrategy extends CommissionFeeStrategy
 {
-    const COMMISSION_FEE_PERCENT = 0.003;
     const MIN_FEEABLE_AMOUNT = 1000;
 
     public function calculate(Operation $operation): float
@@ -18,7 +17,12 @@ class CacheOutPrivateStrategy implements CommissionFeeStrategyInterface
         }
 
         $amount = $amount - 1000;
-        $fee = $amount * self::COMMISSION_FEE_PERCENT;
+
+        $fee = parent::calculate(new Operation(
+            $operation->getOperationType(),
+            $amount,
+            $operation->getCurrency()
+        ));
 
         return $fee;
     }
