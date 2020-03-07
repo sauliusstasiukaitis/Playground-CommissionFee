@@ -20,5 +20,10 @@
         "psr-4": {
             "CommissionFee\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CommissionFeeTest\\": "tests/"
+        }
     }
 }
