@@ -5,7 +5,7 @@ namespace CommissionFeeTest\Unit;
 use CommissionFee\Customer;
 use PHPUnit\Framework\TestCase;
 
-class UserTest extends TestCase
+class CustomerTest extends TestCase
 {
     public function testIsPrivate()
     {
