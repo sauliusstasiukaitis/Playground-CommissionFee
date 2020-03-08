@@ -55,7 +55,9 @@ class CommissionFeeCalculator
 
             $operationCurrencyBeforeConversion = $operation->getCurrency()->getAbbreviation();
 
+            $originalCurrency = null;
             if ($operationCurrencyBeforeConversion !== $this->defaultCurrency->getAbbreviation()) {
+                $originalCurrency = clone $operation->getCurrency();
                 $operation = $this->currencyConverter->convertOperation($operation, $this->defaultCurrency);
             }
 
@@ -68,8 +70,18 @@ class CommissionFeeCalculator
 
             $strategy = $this->strategyFactory->create($context);
 
+            $commissionFee = $strategy->calculate($context->getOperation());
+
+            if (!is_null($originalCurrency)) {
+                $commissionFee = $this->currencyConverter->convertAmount(
+                    $commissionFee,
+                    $operation->getCurrency(),
+                    $originalCurrency
+                );
+            }
+
             $commissionFeeList[] = round(
-                $strategy->calculate($context->getOperation()),
+                $commissionFee,
                 2,
                 PHP_ROUND_HALF_UP
             );

@@ -43,6 +43,15 @@ class CurrencyConverter
         return $convertedOperation;
     }
 
+    public function convertAmount(float $amountToConvert, Currency $operationCurrency, Currency $convertToCurrency): float
+    {
+        $operationCurrencyAbreviation = $operationCurrency->getAbbreviation();
+
+        $currencyRate = $this->getCurrencyRate($operationCurrencyAbreviation, $convertToCurrency->getAbbreviation());
+
+        return $amountToConvert * $currencyRate;
+    }
+
     private function getEurToJpy(): float
     {
         return 129.53;

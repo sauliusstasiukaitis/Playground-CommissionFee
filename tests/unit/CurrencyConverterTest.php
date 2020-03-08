@@ -86,6 +86,41 @@ class CurrencyConverterTest extends TestCase
         );
     }
 
+    public function testConvertEurToUsdAmount()
+    {
+        $amountUsd = 86.98;
+        $amountEur = 100.000906;
+
+        $currencyConverter = new CurrencyConverter();
+        $amountAfterConvertion = $currencyConverter->convertAmount(
+            $amountUsd,
+            new Currency('EUR'),
+            new Currency('USD')
+        );
+
+        $this->assertSame(
+            $amountEur,
+            $amountAfterConvertion
+        );
+    }
+
+    public function testConvertUsdToEurAmount()
+    {
+        $amountUsd = 86.97921196833957;
+        $amountEur = 100.0;
+
+        $currencyConverter = new CurrencyConverter();
+        $amountAfterConvertion = $currencyConverter->convertAmount(
+            $amountEur,
+            new Currency('USD'),
+            new Currency('EUR')
+        );
+
+        $this->assertSame(
+            $amountUsd,
+            $amountAfterConvertion
+        );
+    }
 
     public function testConvertUnknownCurrencyThrowsException()
     {
