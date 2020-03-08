@@ -7,6 +7,7 @@ use CommissionFee\CommissionFeeContextFactory;
 use CommissionFee\CommisssionFeeCalculateStrategy\StrategyFactory;
 use CommissionFee\Currency;
 use bovigo\vfs\vfsStream;
+use CommissionFee\CurrencyConverter;
 use CommissionFee\ParametersToObjectsFactory;
 use CommissionFee\Storage\PrivateCacheOutStrategyDataRepository;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +37,8 @@ class CommissionFeeCalculatorDefaultCurrencyTest extends TestCase
             new CommissionFeeContextFactory(),
             new StrategyFactory(),
             $defaultCurrency,
-            new PrivateCacheOutStrategyDataRepository()
+            new PrivateCacheOutStrategyDataRepository(),
+            new CurrencyConverter()
         );
         $commissionFeeList = $commissionFeeCalculator->calculate($fileStream);
 
@@ -65,7 +67,8 @@ class CommissionFeeCalculatorDefaultCurrencyTest extends TestCase
             new CommissionFeeContextFactory(),
             new StrategyFactory(),
             $defaultCurrency,
-            new PrivateCacheOutStrategyDataRepository()
+            new PrivateCacheOutStrategyDataRepository(),
+            new CurrencyConverter()
         );
         $commissionFeeList = $commissionFeeCalculator->calculate($fileStream);
 
@@ -95,7 +98,8 @@ class CommissionFeeCalculatorDefaultCurrencyTest extends TestCase
             new CommissionFeeContextFactory(),
             new StrategyFactory(),
             $defaultCurrency,
-            new PrivateCacheOutStrategyDataRepository()
+            new PrivateCacheOutStrategyDataRepository(),
+            new CurrencyConverter()
         );
         $commissionFeeList = $commissionFeeCalculator->calculate($fileStream);
 
@@ -125,7 +129,8 @@ class CommissionFeeCalculatorDefaultCurrencyTest extends TestCase
             new CommissionFeeContextFactory(),
             new StrategyFactory(),
             $defaultCurrency,
-            new PrivateCacheOutStrategyDataRepository()
+            new PrivateCacheOutStrategyDataRepository(),
+            new CurrencyConverter()
         );
         $commissionFeeList = $commissionFeeCalculator->calculate($fileStream);
 
@@ -156,7 +161,8 @@ class CommissionFeeCalculatorDefaultCurrencyTest extends TestCase
             new CommissionFeeContextFactory(),
             new StrategyFactory(),
             $defaultCurrency,
-            new PrivateCacheOutStrategyDataRepository()
+            new PrivateCacheOutStrategyDataRepository(),
+            new CurrencyConverter()
         );
         $commissionFeeList = $commissionFeeCalculator->calculate($fileStream);
 
@@ -186,7 +192,8 @@ class CommissionFeeCalculatorDefaultCurrencyTest extends TestCase
             new CommissionFeeContextFactory(),
             new StrategyFactory(),
             $defaultCurrency,
-            new PrivateCacheOutStrategyDataRepository()
+            new PrivateCacheOutStrategyDataRepository(),
+            new CurrencyConverter()
         );
         $commissionFeeList = $commissionFeeCalculator->calculate($fileStream);
 

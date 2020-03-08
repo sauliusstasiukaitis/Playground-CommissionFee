@@ -29,7 +29,8 @@ $commissionFeeCalculator = new \CommissionFee\CommissionFeeCalculator(
     new \CommissionFee\CommissionFeeContextFactory(),
     new \CommissionFee\CommisssionFeeCalculateStrategy\StrategyFactory(),
     new \CommissionFee\Currency('EUR'),
-    new \CommissionFee\Storage\PrivateCacheOutStrategyDataRepository()
+    new \CommissionFee\Storage\PrivateCacheOutStrategyDataRepository(),
+    new \CommissionFee\CurrencyConverter()
 );
 $commissionFeeList = $commissionFeeCalculator->calculate($fileStream);
 

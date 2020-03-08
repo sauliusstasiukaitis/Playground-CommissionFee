@@ -10,6 +10,7 @@ namespace CommissionFee\Operation;
 
 use CommissionFee\Currency;
 
+// @ToDo: move date to operation. Date might be needed to track the operation and it's currency rates.
 class Operation
 {
     private OperationType $operationType;
@@ -31,25 +32,26 @@ class Operation
         $this->amount = $amount;
     }
 
-    /**
-     * @return OperationType
-     */
+    public function setAmount(float $amount): void
+    {
+        $this->amount = $amount;
+    }
+
+    public function setCurrency(Currency $currency): void
+    {
+        $this->currency = $currency;
+    }
+
     public function getOperationType(): OperationType
     {
         return $this->operationType;
     }
 
-    /**
-     * @return float
-     */
     public function getAmount(): float
     {
         return $this->amount;
     }
 
-    /**
-     * @return Currency
-     */
     public function getCurrency(): Currency
     {
         return $this->currency;

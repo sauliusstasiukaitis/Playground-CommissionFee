@@ -12,19 +12,22 @@ class CommissionFeeCalculator
     private StrategyFactory $strategyFactory;
     private Currency $defaultCurrency;
     private PrivateCacheOutStrategyDataRepository $customerData;
+    private CurrencyConverter $currencyConverter;
 
     public function __construct(
         ParametersToObjectsFactory $parametersToObjectsBuilder,
         CommissionFeeContextFactory $commissionFeeContextBuilder,
         StrategyFactory $strategyFactory,
         Currency $defaultCurrency,
-        PrivateCacheOutStrategyDataRepository $customerData
+        PrivateCacheOutStrategyDataRepository $customerData,
+        CurrencyConverter $currencyConverter
     ) {
         $this->parametersToObjectsBuilder = $parametersToObjectsBuilder;
         $this->commissionFeeContextBuilder = $commissionFeeContextBuilder;
         $this->strategyFactory = $strategyFactory;
         $this->defaultCurrency = $defaultCurrency;
         $this->customerData = $customerData;
+        $this->currencyConverter = $currencyConverter;
     }
 
     /**
@@ -48,16 +51,28 @@ class CommissionFeeCalculator
 
             $parametersToObject = $this->parametersToObjectsBuilder->create($line);
 
+            $operation = $parametersToObject->getOperation();
+
+            $operationCurrencyBeforeConversion = $operation->getCurrency()->getAbbreviation();
+
+            if ($operationCurrencyBeforeConversion !== $this->defaultCurrency->getAbbreviation()) {
+                $operation = $this->currencyConverter->convertOperation($operation, $this->defaultCurrency);
+            }
+
             $context = $this->commissionFeeContextBuilder->create(
                 $parametersToObject->getDate(),
                 $parametersToObject->getCustomer(),
-                $parametersToObject->getOperation(),
+                $operation,
                 $this->customerData
             );
 
             $strategy = $this->strategyFactory->create($context);
 
-            $commissionFeeList[] = $strategy->calculate($context->getOperation());
+            $commissionFeeList[] = round(
+                $strategy->calculate($context->getOperation()),
+                2,
+                PHP_ROUND_HALF_UP
+            );
         }
         fclose($inputFile);
 
