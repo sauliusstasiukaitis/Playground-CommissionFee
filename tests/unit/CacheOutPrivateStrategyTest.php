@@ -6,6 +6,7 @@ use CommissionFee\CommisssionFeeCalculateStrategy\CacheOutPrivateStrategy;
 use CommissionFee\Currency\Currency;
 use CommissionFee\Operation\Operation;
 use CommissionFee\Operation\OperationTypeCashOut;
+use CommissionFee\Storage\PrivateCacheOutStrategyDataNullEntity;
 use PHPUnit\Framework\TestCase;
 
 class CacheOutPrivateStrategyTest extends TestCase
@@ -14,7 +15,7 @@ class CacheOutPrivateStrategyTest extends TestCase
     {
         return [
             [1],
-            [CacheOutPrivateStrategy::MIN_FEEABLE_AMOUNT]
+            [CacheOutPrivateStrategy::CUSTOMER_CACHE_OUT_AMOUNT_LIMIT]
         ];
     }
 
@@ -30,7 +31,7 @@ class CacheOutPrivateStrategyTest extends TestCase
             $amount,
             new Currency('EUR')
         );
-        $strategy = new CacheOutPrivateStrategy();
+        $strategy = $this->getCacheOutPrivateStrategy();
 
         $this->assertSame(
             $strategy->calculate($operation),
@@ -58,7 +59,7 @@ class CacheOutPrivateStrategyTest extends TestCase
             $amount,
             new Currency('EUR')
         );
-        $strategy = new CacheOutPrivateStrategy();
+        $strategy = $this->getCacheOutPrivateStrategy();
 
         $this->assertSame(
             $strategy->calculate($operation),
@@ -85,5 +86,14 @@ class CacheOutPrivateStrategyTest extends TestCase
         );
 
         CacheOutPrivateStrategy::getPeriodBeginningTimestamp(0);
+    }
+
+    /**
+     * @return CacheOutPrivateStrategy
+     */
+    private function getCacheOutPrivateStrategy(): CacheOutPrivateStrategy
+    {
+        $strategy = new CacheOutPrivateStrategy(new PrivateCacheOutStrategyDataNullEntity());
+        return $strategy;
     }
 }

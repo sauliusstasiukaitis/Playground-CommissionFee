@@ -3,20 +3,37 @@
 namespace CommissionFee\CommisssionFeeCalculateStrategy;
 
 use CommissionFee\Operation\Operation;
+use CommissionFee\Storage\StrategyDataEntityInterface;
 
 class CacheOutPrivateStrategy extends CommissionFeeStrategy
 {
-    const MIN_FEEABLE_AMOUNT = 1000;
+    const CUSTOMER_CACHE_OUT_AMOUNT_LIMIT = 1000;
+    const CUSTOMER_FREE_CASH_OUT_LIMIT = 3;
+
+    private StrategyDataEntityInterface $customerData;
+
+    public function __construct(StrategyDataEntityInterface $customerData)
+    {
+        $this->customerData = $customerData;
+    }
 
     public function calculate(Operation $operation): float
     {
+        if (
+            $this->customerData->getTransactionCount() >= static::CUSTOMER_FREE_CASH_OUT_LIMIT ||
+            $this->customerData->getAmount() > static::CUSTOMER_CACHE_OUT_AMOUNT_LIMIT
+        ) {
+
+            return parent::calculate($operation);
+        }
+
         $amount = $operation->getAmount();
 
-        if ($amount <= static::MIN_FEEABLE_AMOUNT) {
+        if (($amount + $this->customerData->getAmount()) <= static::CUSTOMER_CACHE_OUT_AMOUNT_LIMIT) {
             return 0.0;
         }
 
-        $amount = $amount - 1000;
+        $amount = $amount - static::CUSTOMER_CACHE_OUT_AMOUNT_LIMIT + $this->customerData->getAmount();
 
         $fee = parent::calculate(new Operation(
             $operation->getOperationType(),

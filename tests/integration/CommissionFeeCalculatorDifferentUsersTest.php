@@ -12,7 +12,7 @@ use CommissionFee\ParametersToObjectsFactory;
 use CommissionFee\Storage\PrivateCacheOutStrategyDataRepository;
 use PHPUnit\Framework\TestCase;
 
-class CommissionFeeCalculatorDifferentCurrenciesTest extends TestCase
+class CommissionFeeCalculatorDifferentUsersTest extends TestCase
 {
     private $vfsStream;
 
@@ -20,76 +20,13 @@ class CommissionFeeCalculatorDifferentCurrenciesTest extends TestCase
         $this->vfsStream = vfsStream::setup();
     }
 
-    public function testCalculateCacheOutBelowThreshold()
+    public function testCalculateSameCurrencySameCustomer()
     {
         $defaultCurrency = new Currency('EUR');
 
         $inputFileContent = <<<HERDOC
-                            2016-01-06,1,natural,cash_out,30000,JPY
-                            HERDOC;
-
-        $fileStream = $this->mockFile($inputFileContent);
-
-        $commissionFeeCalculator = new CommissionFeeCalculator(
-            new ParametersToObjectsFactory(),
-            new CommissionFeeContextFactory(),
-            new StrategyFactory(),
-            $defaultCurrency,
-            new PrivateCacheOutStrategyDataRepository(),
-            new CurrencyConverter()
-        );
-        $commissionFeeList = $commissionFeeCalculator->calculate($fileStream);
-
-        $commissionFee = $commissionFeeList[0];
-
-        $this->assertSame(
-            0.0,
-            $commissionFee,
-            "Should be 0 as 30000 JPY equals to 252.39 EUR"
-        );
-    }
-
-    // @ToDo: address 1 cnt rounding issue. Should be 9.0
-    public function testCalculateCacheIn()
-    {
-        $defaultCurrency = new Currency('EUR');
-
-        $inputFileContent = <<<HERDOC
-                            2016-01-06,1,natural,cash_in,30000,JPY
-                            HERDOC;
-
-        $fileStream = $this->mockFile($inputFileContent);
-
-        $commissionFeeCalculator = new CommissionFeeCalculator(
-            new ParametersToObjectsFactory(),
-            new CommissionFeeContextFactory(),
-            new StrategyFactory(),
-            $defaultCurrency,
-            new PrivateCacheOutStrategyDataRepository(),
-            new CurrencyConverter()
-        );
-        $commissionFeeList = $commissionFeeCalculator->calculate($fileStream);
-
-        $commissionFee = $commissionFeeList[0];
-
-        $this->assertSame(
-            9.01,
-            $commissionFee,
-            <<<HEREDOCS
-            Should be about 9 JPY this is about 0.07 EUR cent 
-            as 30000 JPY equals to 252.39 EUR and commission fee is 0.03%
-            HEREDOCS
-        );
-    }
-
-    // @ToDo: address 1 cnt rounding issue. Should be 0.3
-    public function testCalculateCacheOutConvertBack()
-    {
-        $defaultCurrency = new Currency('EUR');
-
-        $inputFileContent = <<<HERDOC
-                            2016-01-07,1,natural,cash_out,1200.00,EUR
-                            2016-01-07,1,natural,cash_out,100.00,USD
+                            2016-01-06,1,natural,cash_out,200,EUR
+                            2016-01-07,1,natural,cash_out,1000.00,EUR
                             HERDOC;
 
         $fileStream = $this->mockFile($inputFileContent);
@@ -107,21 +44,50 @@ class CommissionFeeCalculatorDifferentCurrenciesTest extends TestCase
         $commissionFee = $commissionFeeList[1];
 
         $this->assertSame(
-            0.31,
+            0.6,
+            $commissionFee,
+            "Commissions for cash out after 1000 is 0.3% therefore for 200 should be 0.6"
+        );
+    }
+
+    public function testCalculateDifferentCurrencySingleUser()
+    {
+        $defaultCurrency = new Currency('EUR');
+
+        $inputFileContent = <<<HERDOC
+                            2016-01-05,1,natural,cash_out,200.00,EUR
+                            2016-01-06,1,natural,cash_out,30000,JPY
+                            2016-01-07,1,natural,cash_out,1000.00,EUR
+                            HERDOC;
+
+        $fileStream = $this->mockFile($inputFileContent);
+
+        $commissionFeeCalculator = new CommissionFeeCalculator(
+            new ParametersToObjectsFactory(),
+            new CommissionFeeContextFactory(),
+            new StrategyFactory(),
+            $defaultCurrency,
+            new PrivateCacheOutStrategyDataRepository(),
+            new CurrencyConverter()
+        );
+        $commissionFeeList = $commissionFeeCalculator->calculate($fileStream);
+
+        $commissionFee = $commissionFeeList[2];
+
+        $this->assertSame(
+            1.3,
             $commissionFee
         );
     }
 
-    // @ToDo: address 1 cnt rounding issue. Should be 8612
-    public function testCalculateCacheOutConvertBack2()
+    public function testCalculateDifferentCurrencyDifferentUser()
     {
-        $this->markTestSkipped('Address rounding issu first');
-
         $defaultCurrency = new Currency('EUR');
 
         $inputFileContent = <<<HERDOC
-                            2016-01-07,1,natural,cash_out,1200.00,EUR
-                            2016-02-19,2,natural,cash_out,3000000,JPY
+                            2016-01-05,2,natural,cash_in,200.00,EUR
+                            2016-01-06,1,natural,cash_out,30000,JPY
+                            2016-01-07,1,natural,cash_out,1000.00,EUR
                             HERDOC;
 
         $fileStream = $this->mockFile($inputFileContent);
@@ -136,10 +102,40 @@ class CommissionFeeCalculatorDifferentCurrenciesTest extends TestCase
         );
         $commissionFeeList = $commissionFeeCalculator->calculate($fileStream);
 
-        $commissionFee = $commissionFeeList[1];
+        $commissionFee = $commissionFeeList[2];
 
         $this->assertSame(
-            8612.0,
+            0.7,
+            $commissionFee
+        );
+    }
+
+    public function testCalculateDifferentCurrencySingleUserDifferentOperationType()
+    {
+        $defaultCurrency = new Currency('EUR');
+
+        $inputFileContent = <<<HERDOC
+                            2016-01-05,1,natural,cash_in,200.00,EUR
+                            2016-01-06,1,natural,cash_out,30000,JPY
+                            2016-01-07,1,natural,cash_out,1000.00,EUR
+                            HERDOC;
+
+        $fileStream = $this->mockFile($inputFileContent);
+
+        $commissionFeeCalculator = new CommissionFeeCalculator(
+            new ParametersToObjectsFactory(),
+            new CommissionFeeContextFactory(),
+            new StrategyFactory(),
+            $defaultCurrency,
+            new PrivateCacheOutStrategyDataRepository(),
+            new CurrencyConverter()
+        );
+        $commissionFeeList = $commissionFeeCalculator->calculate($fileStream);
+
+        $commissionFee = $commissionFeeList[2];
+
+        $this->assertSame(
+            0.7,
             $commissionFee
         );
     }

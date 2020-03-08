@@ -5,6 +5,8 @@ namespace CommissionFee;
 use CommissionFee\CommisssionFeeCalculateStrategy\StrategyFactory;
 use CommissionFee\Currency\Currency;
 use CommissionFee\Currency\CurrencyConverter;
+use CommissionFee\Operation\OperationType;
+use CommissionFee\Operation\OperationTypeCashOut;
 use CommissionFee\Storage\PrivateCacheOutStrategyDataRepository;
 
 class CommissionFeeCalculator
@@ -74,6 +76,10 @@ class CommissionFeeCalculator
 
             $commissionFee = $strategy->calculate($context->getOperation());
 
+            if ($operation->getOperationType() instanceof OperationTypeCashOut) {
+                $this->customerData->addEntry($context->getCustomer(), $operation->getAmount(), $context->getDateTimeStamp());
+            }
+
             if (!is_null($originalCurrency)) {
                 $commissionFee = $this->currencyConverter->convertAmount(
                     $commissionFee,
@@ -82,11 +88,8 @@ class CommissionFeeCalculator
                 );
             }
 
-            $commissionFeeList[] = round(
-                $commissionFee,
-                2,
-                PHP_ROUND_HALF_UP
-            );
+            // To ensure it's always rounded up first multiply to move cents to EUR then divide back to cents.
+            $commissionFeeList[] = ceil($commissionFee * 100) / 100;
         }
         fclose($inputFile);
 

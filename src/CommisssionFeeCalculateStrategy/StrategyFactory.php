@@ -7,9 +7,6 @@ use CommissionFee\Operation\OperationTypeCashIn;
 
 class StrategyFactory
 {
-    const CUSTOMER_CACHE_OUT_AMOUNT_LIMIT = 1000;
-    const CUSTOMER_FREE_CASH_OUT_LIMIT = 3;
-
     public function create(CommissionFeeContext $context): CommissionFeeStrategyInterface
     {
         $operation = $context->getOperation();
@@ -27,17 +24,7 @@ class StrategyFactory
         $customerDataRepository = $context->getCustomerData();
         $customerData = $customerDataRepository->getDataByCustomerIdAndDate($customer->getId(), $context->getDateTimeStamp());
 
-        if (
-            $customerData->getTransactionCount() >= static::CUSTOMER_FREE_CASH_OUT_LIMIT ||
-            $customerData->getAmount() > static::CUSTOMER_CACHE_OUT_AMOUNT_LIMIT
-        ) {
-
-            $strategy = new CacheOutPrivateStrategyAfterLimit();
-        } else {
-            $strategy = new CacheOutPrivateStrategy();
-        }
-
-        $customerDataRepository->addEntry($customer, $operation->getAmount(), $context->getDateTimeStamp());
+        $strategy = new CacheOutPrivateStrategy($customerData);
 
         return $strategy;
     }
