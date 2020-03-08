@@ -35,13 +35,13 @@ class ParametersToObjects
         return $timestamp;
     }
 
-    public function getUser(): User
+    public function getUser(): Customer
     {
         $parameters = explode(static::PARAMETERS_DELIMITER, $this->inputLine);
         $userId = $parameters[1];
         $userType = $parameters[2];
 
-        return new User($userId, $userType);
+        return new Customer($userId, $userType);
     }
 
     public function getOperation(): Operation

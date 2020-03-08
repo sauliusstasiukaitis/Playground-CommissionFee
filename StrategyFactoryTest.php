@@ -10,7 +10,7 @@ use CommissionFee\Operation\Operation;
 use CommissionFee\Operation\OperationType;
 use CommissionFee\Operation\OperationTypeCashIn;
 use CommissionFee\Operation\OperationTypeCashOut;
-use CommissionFee\User;
+use CommissionFee\Customer;
 use PHPUnit\Framework\TestCase;
 
 class StrategyFactoryTest extends TestCase
@@ -49,7 +49,7 @@ class StrategyFactoryTest extends TestCase
     {
         return new CommissionFeeContext(
             strtotime('2019-01-01'),
-            new User(6, $userType),
+            new Customer(6, $userType),
             new Operation(
                 $operationType,
                 1200,

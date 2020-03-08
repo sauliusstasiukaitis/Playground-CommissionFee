@@ -7,7 +7,7 @@ use CommissionFee\Operation\OperationTypeCashOut;
 use CommissionFee\ParametersToObjects;
 use CommissionFee\Currency;
 use CommissionFee\Operation\Operation;
-use CommissionFee\User;
+use CommissionFee\Customer;
 use PHPUnit\Framework\TestCase;
 
 class ParametersToObjectsTest extends TestCase
@@ -37,7 +37,7 @@ class ParametersToObjectsTest extends TestCase
         $inputLine = '2015-01-01,1,natural,cash_out,1200.00,EUR';
         $parametersToObjects = new ParametersToObjects($inputLine);
 
-        $expectedUser = new User(1, 'natural');
+        $expectedUser = new Customer(1, 'natural');
 
         $this->assertEquals($parametersToObjects->getUser(), $expectedUser);
     }
@@ -47,7 +47,7 @@ class ParametersToObjectsTest extends TestCase
         $inputLine = '2015-01-01,1,legal,cash_out,1200.00,EUR';
         $parametersToObjects = new ParametersToObjects($inputLine);
 
-        $expectedUser = new User(1, 'legal');
+        $expectedUser = new Customer(1, 'legal');
 
         $this->assertEquals($parametersToObjects->getUser(), $expectedUser);
     }

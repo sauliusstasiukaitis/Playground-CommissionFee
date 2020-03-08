@@ -3,7 +3,7 @@
 namespace CommissionFee\Storage;
 
 use CommissionFee\CommisssionFeeCalculateStrategy\CacheOutPrivateStrategy;
-use CommissionFee\User;
+use CommissionFee\Customer;
 
 /**
  * Simple way to store data in memory to keep track if user reach a week limit.
@@ -15,7 +15,7 @@ class PrivateCacheOutStrategyDataRepository implements StrategyDataRepositoryInt
     private array $customerData;
 
     public function addEntry(
-        User $user,
+        Customer $user,
         float $amount,
         int $dateTimestamp
     ): void

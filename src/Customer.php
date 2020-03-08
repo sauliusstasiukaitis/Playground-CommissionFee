@@ -9,7 +9,7 @@
 namespace CommissionFee;
 
 
-class User
+class Customer
 {
     /** Private person */
     const USER_TYPE_PRIVATE = 'natural';

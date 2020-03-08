@@ -9,7 +9,7 @@ class CommissionFeeContextFactory
 {
     public function create(
         int $dateTimeStamp,
-        User $user,
+        Customer $user,
         Operation $operations,
         PrivateCacheOutStrategyDataRepository $userData
     ): CommissionFeeContext

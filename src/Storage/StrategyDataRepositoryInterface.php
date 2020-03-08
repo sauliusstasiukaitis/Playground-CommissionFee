@@ -2,7 +2,7 @@
 
 namespace CommissionFee\Storage;
 
-use CommissionFee\User;
+use CommissionFee\Customer;
 
 /**
  * Allows to add different repositories to store data differently etc. in Redis, MySQL.
@@ -11,7 +11,7 @@ use CommissionFee\User;
 interface StrategyDataRepositoryInterface
 {
     public function addEntry(
-        User $user,
+        Customer $user,
         float $amount,
         int $dateTimestamp
     ): void;

@@ -14,7 +14,7 @@ use CommissionFee\Storage\PrivateCacheOutStrategyDataRepository;
 class CommissionFeeContext
 {
     private int $dateTimeStamp;
-    private User $user;
+    private Customer $user;
     private Operation $operation;
     private PrivateCacheOutStrategyDataRepository $customerData;
 
@@ -23,12 +23,12 @@ class CommissionFeeContext
      * calculate commission fee.
      *
      * @param int       $dateTimeStamp
-     * @param User      $user
+     * @param Customer      $user
      * @param Operation $operation
      */
     public function __construct(
         int $dateTimeStamp,
-        User $user,
+        Customer $user,
         Operation $operations,
         PrivateCacheOutStrategyDataRepository $userData
     ) {
@@ -43,7 +43,7 @@ class CommissionFeeContext
         return $this->dateTimeStamp;
     }
 
-    public function getUser(): User
+    public function getUser(): Customer
     {
         return $this->user;
     }
