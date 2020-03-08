@@ -38,7 +38,7 @@ class CommissionFeeCalculator
      * @param resource $inputFile resource to get content from input file.
      * @return array list of commission fees.
      *
-     * @ToDo: implement convertion rates.
+     * @ToDo: refactor to make more readable
      *
      * @throws \Exception
      */
@@ -53,13 +53,17 @@ class CommissionFeeCalculator
                 continue;
             }
 
+            // Transform a single input line to an objects used by this library.
+            // etc. customer id and type used to for Customer object.
             $parametersToObject = $this->parametersToObjectsBuilder->create($line);
 
             $operation = $parametersToObject->getOperation();
 
+            // Keep old currency to convert back a commission fee.
             $operationCurrencyBeforeConversion = $operation->getCurrency()->getAbbreviation();
 
             $originalCurrency = null;
+            // Check if need to convert - in case operation currency is not a default.
             if ($operationCurrencyBeforeConversion !== $this->defaultCurrency->getAbbreviation()) {
                 $originalCurrency = clone $operation->getCurrency();
                 $operation = $this->currencyConverter->convertOperation($operation, $this->defaultCurrency);
@@ -72,14 +76,20 @@ class CommissionFeeCalculator
                 $this->customerData
             );
 
+            // Select strategy based on context.
             $strategy = $this->strategyFactory->create($context);
 
             $commissionFee = $strategy->calculate($context->getOperation());
 
-            if ($operation->getOperationType() instanceof OperationTypeCashOut) {
+            // Cache out operations are limited for Private user per week.
+            if (
+                $operation->getOperationType() instanceof OperationTypeCashOut
+                && $context->getCustomer()->isPrivate()
+            ) {
                 $this->customerData->addEntry($context->getCustomer(), $operation->getAmount(), $context->getDateTimeStamp());
             }
 
+            // Commission fee must be returned in original currency.
             if (!is_null($originalCurrency)) {
                 $commissionFee = $this->currencyConverter->convertAmount(
                     $commissionFee,

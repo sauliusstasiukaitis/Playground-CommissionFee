@@ -1,5 +1,7 @@
 <?php
 
+namespace CommissionFeeTest\Unit;
+
 use CommissionFee\CommissionFeeContext;
 use CommissionFee\CommisssionFeeCalculateStrategy\CacheInStrategy;
 use CommissionFee\CommisssionFeeCalculateStrategy\CacheOutCompanyStrategy;
@@ -11,6 +13,7 @@ use CommissionFee\Operation\OperationType;
 use CommissionFee\Operation\OperationTypeCashIn;
 use CommissionFee\Operation\OperationTypeCashOut;
 use CommissionFee\Customer;
+use CommissionFee\Storage\PrivateCacheOutStrategyDataRepository;
 use PHPUnit\Framework\TestCase;
 
 class StrategyFactoryTest extends TestCase
@@ -54,7 +57,8 @@ class StrategyFactoryTest extends TestCase
                 $operationType,
                 1200,
                 new Currency('EUR')
-            )
+            ),
+            new PrivateCacheOutStrategyDataRepository()
         );
     }
 }

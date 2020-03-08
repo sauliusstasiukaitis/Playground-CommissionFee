@@ -22,3 +22,26 @@ Playground to implement [commision fee task](TASK.md)
   etc. 30000 JPY would be rounded to 231.61 EUR.
   
 # Known issues
+
+- Acceptance tests run only from the file
+
+# Running 
+
+```
+    cd PROJECT_DIRECTORY
+    php src/bin/getCommissionFee.php tests/acceptance/fixtures/input.csv 
+```
+
+# Testing
+
+- Install dependencies:
+
+        composer install
+
+- Run tests:
+
+        vendor/bin/phpunit tests
+
+# Documentation
+
+Read [repository wiki for more details](https://github.com/stasiukaitis-saulius/Playground-CommissionFee/wiki/Documentation)

@@ -9,14 +9,14 @@
 namespace CommissionFee;
 
 use CommissionFee\Operation\Operation;
-use CommissionFee\Storage\PrivateCacheOutStrategyDataRepository;
+use CommissionFee\Storage\StrategyDataRepositoryInterface;
 
 class CommissionFeeContext
 {
     private int $dateTimeStamp;
     private Customer $customer;
     private Operation $operation;
-    private PrivateCacheOutStrategyDataRepository $customerData;
+    private StrategyDataRepositoryInterface $customerData;
 
     /**
      * CommissionFeeCalculator constructor dependent on context chooses correct strategy to
@@ -30,7 +30,7 @@ class CommissionFeeContext
         int $dateTimeStamp,
         Customer $customer,
         Operation $operations,
-        PrivateCacheOutStrategyDataRepository $customerData
+        StrategyDataRepositoryInterface $customerData = null
     ) {
         $this->dateTimeStamp = $dateTimeStamp;
         $this->customer = $customer;
@@ -55,7 +55,7 @@ class CommissionFeeContext
 
     // @ToDo: depend on abstraction.
     // This would allow to change rules and store data for all customers - including companies.
-    public function getCustomerData(): PrivateCacheOutStrategyDataRepository
+    public function getCustomerData(): StrategyDataRepositoryInterface
     {
         return $this->customerData;
     }

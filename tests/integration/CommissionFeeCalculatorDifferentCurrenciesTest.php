@@ -115,7 +115,7 @@ class CommissionFeeCalculatorDifferentCurrenciesTest extends TestCase
     // @ToDo: address 1 cnt rounding issue. Should be 8612
     public function testCalculateCacheOutConvertBack2()
     {
-        $this->markTestSkipped('Address rounding issu first');
+        $this->markTestSkipped('Address rounding issue first');
 
         $defaultCurrency = new Currency('EUR');
 
