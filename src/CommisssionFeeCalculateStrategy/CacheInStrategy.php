@@ -7,6 +7,7 @@ use CommissionFee\Operation\Operation;
 class CacheInStrategy extends CommissionFeeStrategy
 {
     const MAX_COMMISSION = 5.0;
+    const COMMISSION_FEE_PERCENT = 0.0003;
 
     public function calculate(Operation $operation): float
     {

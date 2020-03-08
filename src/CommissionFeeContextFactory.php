@@ -10,7 +10,7 @@ class CommissionFeeContextFactory
         int $dateTimeStamp,
         User $user,
         Operation $operations,
-        UserDataRepository $userData
+        PrivateCacheOutStrategyDataRepository $userData
     ): CommissionFeeContext
     {
         return new CommissionFeeContext(

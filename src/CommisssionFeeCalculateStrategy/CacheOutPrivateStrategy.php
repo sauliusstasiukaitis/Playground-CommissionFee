@@ -26,4 +26,31 @@ class CacheOutPrivateStrategy extends CommissionFeeStrategy
 
         return $fee;
     }
+
+    /**
+     * @param int $timeStamp
+     *
+     * @return int Timestamp of the last Monday from the provided time stamp.
+     *
+     * @throws \Exception when provided timestamp is not valid.
+     */
+    public static function getPeriodBeginningTimestamp(int $timeStamp): int
+    {
+        $lastMondayTimestamp = strtotime('last monday', $timeStamp);
+
+        if (
+            $lastMondayTimestamp === false ||
+            $lastMondayTimestamp < 0
+        ) {
+            throw new \Exception(
+                <<<HEREDOCS
+                    Time stamp conversion failed! 
+                    Not possible to get a correct timestamp for the Monday of provided timestamp: 
+                    HEREDOCS
+                . $timeStamp
+            );
+        }
+
+        return $lastMondayTimestamp;
+    }
 }

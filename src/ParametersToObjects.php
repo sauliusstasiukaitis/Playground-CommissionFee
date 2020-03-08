@@ -16,15 +16,26 @@ class ParametersToObjects
         $this->inputLine = $inputLine;
     }
 
-    public function getDate()
+    /**
+     * @return int
+     *
+     * @throws \Exception
+     */
+    public function getDate(): int
     {
         $parameters = explode(static::PARAMETERS_DELIMITER, $this->inputLine);
         $date = $parameters[0];
 
-        return strtotime($date);
+        $timestamp = strtotime($date);
+
+        if ($timestamp === false) {
+            throw new \Exception('Input Date could not be converted to a timestamp: '. $date);
+        }
+
+        return $timestamp;
     }
 
-    public function getUser()
+    public function getUser(): User
     {
         $parameters = explode(static::PARAMETERS_DELIMITER, $this->inputLine);
         $userId = $parameters[1];
@@ -33,7 +44,7 @@ class ParametersToObjects
         return new User($userId, $userType);
     }
 
-    public function getOperation()
+    public function getOperation(): Operation
     {
         $parameters = explode(static::PARAMETERS_DELIMITER, $this->inputLine);
         $operationTypeInput = $parameters[3];

@@ -66,4 +66,24 @@ class CacheOutPrivateStrategyTest extends TestCase
             "Commissions for cash in above 1000 - 0.3% therefore for ". $amount . " should be ". $expectedFee
         );
     }
+
+    public function testGetPeriodBeginningTimestampForCorrectDate()
+    {
+        $timeStamp = 1419984000; // '2014-12-29';
+        $timeStampOfLastMonday = 1419811200; // '2014-12-28';
+
+        $this->assertSame(CacheOutPrivateStrategy::getPeriodBeginningTimestamp($timeStamp), $timeStampOfLastMonday);
+    }
+
+    public function testGetPeriodBeginningThrowsExceptionForWrongTimestamp()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage(<<<HEREDOCS
+            Time stamp conversion failed! 
+            Not possible to get a correct timestamp for the Monday of provided timestamp: 0
+            HEREDOCS
+        );
+
+        CacheOutPrivateStrategy::getPeriodBeginningTimestamp(0);
+    }
 }

@@ -13,7 +13,8 @@ class CacheInStrategyTest extends TestCase
     public function providerCalculateRegularFee()
     {
         return [
-            [1000, 3]
+            [1000, 0.3],
+            [200, 0.06],
         ];
     }
     
@@ -35,7 +36,7 @@ class CacheInStrategyTest extends TestCase
         $this->assertSame(
             $strategy->calculate($operation),
             $expectedFee,
-            "Commissions for cash in - 0.3% therefore for ". $amount . " should be ". $expectedFee
+            "Commissions for cash in - 0.03% therefore for ". $amount . " should be ". $expectedFee
         );
     }
     public function testCalculateAboveMaxFee()

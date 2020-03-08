@@ -10,14 +10,14 @@ class CommissionFeeCalculator
     private CommissionFeeContextFactory $commissionFeeContextBuilder;
     private StrategyFactory $strategyFactory;
     private Currency $defaultCurrency;
-    private UserDataRepository $userData;
+    private PrivateCacheOutStrategyDataRepository $userData;
 
     public function __construct(
         ParametersToObjectsFactory $parametersToObjectsBuilder,
         CommissionFeeContextFactory $commissionFeeContextBuilder,
         StrategyFactory $strategyFactory,
         Currency $defaultCurrency,
-        UserDataRepository $userData
+        PrivateCacheOutStrategyDataRepository $userData
     ) {
         $this->parametersToObjectsBuilder = $parametersToObjectsBuilder;
         $this->commissionFeeContextBuilder = $commissionFeeContextBuilder;
@@ -31,6 +31,8 @@ class CommissionFeeCalculator
      * @return array list of commission fees.
      *
      * @ToDo: implement convertion rates.
+     *
+     * @throws \Exception
      */
     public function calculate($inputFile)
     {

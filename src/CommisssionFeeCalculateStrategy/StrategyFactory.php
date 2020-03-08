@@ -4,7 +4,6 @@ namespace CommissionFee\CommisssionFeeCalculateStrategy;
 
 use CommissionFee\CommissionFeeContext;
 use CommissionFee\Operation\OperationTypeCashIn;
-use CommissionFee\UserDataRepository;
 
 class StrategyFactory
 {
@@ -25,38 +24,21 @@ class StrategyFactory
             return new CacheOutCompanyStrategy();
         }
 
-        $userData = $context->getUserData();
-        $userTransactionList = $userData->getDataByUserId($user->getId());
+        $customerDataRepository = $context->getCustomerData();
+        $customerData = $customerDataRepository->getDataByUserIdAndDate($user->getId(), $context->getDateTimeStamp());
 
-        if (!is_null($userTransactionList) && count($userTransactionList) >= static::USER_FREE_CASH_OUT_LIMIT) {
+        if (
+            $customerData->getTransactionCount() >= static::USER_FREE_CASH_OUT_LIMIT ||
+            $customerData->getAmount() > static::USER_CACHE_OUT_AMOUNT_LIMIT
+        ) {
+
             $strategy = new CacheOutPrivateStrategyAfterLimit();
         } else {
-            $userTransactionsSum = $this->calculateUserTransactionSum($userTransactionList);
-
-            if ($userTransactionsSum > static::USER_CACHE_OUT_AMOUNT_LIMIT) {
-                $strategy = new CacheOutPrivateStrategyAfterLimit();
-            } else {
-                $strategy = new CacheOutPrivateStrategy();
-            }
+            $strategy = new CacheOutPrivateStrategy();
         }
 
-        $userData->addEntry($user, $operation->getAmount(), $context->getDateTimeStamp());
+        $customerDataRepository->addEntry($user, $operation->getAmount(), $context->getDateTimeStamp());
 
         return $strategy;
-    }
-
-    private function calculateUserTransactionSum(?array $userTransactionList)
-    {
-        $amount = 0;
-
-        if (is_null($userTransactionList)) {
-            return $amount;
-        }
-
-        foreach ($userTransactionList as $userTransaction) {
-            $amount += $userTransaction[UserDataRepository::AMOUNT];
-        }
-
-        return $amount;
     }
 }
