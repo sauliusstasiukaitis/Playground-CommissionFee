@@ -5,7 +5,7 @@ use CommissionFee\CommisssionFeeCalculateStrategy\CacheInStrategy;
 use CommissionFee\CommisssionFeeCalculateStrategy\CacheOutCompanyStrategy;
 use CommissionFee\CommisssionFeeCalculateStrategy\CacheOutPrivateStrategy;
 use CommissionFee\CommisssionFeeCalculateStrategy\StrategyFactory;
-use CommissionFee\Currency;
+use CommissionFee\Currency\Currency;
 use CommissionFee\Operation\Operation;
 use CommissionFee\Operation\OperationType;
 use CommissionFee\Operation\OperationTypeCashIn;

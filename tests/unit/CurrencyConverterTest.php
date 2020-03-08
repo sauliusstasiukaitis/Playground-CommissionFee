@@ -2,8 +2,8 @@
 
 namespace CommissionFeeTest\Unit;
 
-use CommissionFee\Currency;
-use CommissionFee\CurrencyConverter;
+use CommissionFee\Currency\Currency;
+use CommissionFee\Currency\CurrencyConverter;
 use CommissionFee\Operation\Operation;
 use CommissionFee\Operation\OperationTypeCashOut;
 use PHPUnit\Framework\TestCase;

@@ -8,7 +8,7 @@
 
 namespace CommissionFee\Operation;
 
-use CommissionFee\Currency;
+use CommissionFee\Currency\Currency;
 
 // @ToDo: move date to operation. Date might be needed to track the operation and it's currency rates.
 class Operation

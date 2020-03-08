@@ -2,6 +2,7 @@
 
 namespace CommissionFee;
 
+use CommissionFee\Currency\Currency;
 use CommissionFee\Operation\Operation;
 use CommissionFee\Operation\OperationTypeFactory;
 

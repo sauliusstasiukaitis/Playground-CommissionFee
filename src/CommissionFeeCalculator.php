@@ -3,6 +3,8 @@
 namespace CommissionFee;
 
 use CommissionFee\CommisssionFeeCalculateStrategy\StrategyFactory;
+use CommissionFee\Currency\Currency;
+use CommissionFee\Currency\CurrencyConverter;
 use CommissionFee\Storage\PrivateCacheOutStrategyDataRepository;
 
 class CommissionFeeCalculator

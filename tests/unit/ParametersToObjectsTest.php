@@ -5,7 +5,7 @@ namespace CommissionFeeTest\Unit;
 use CommissionFee\Operation\OperationTypeCashIn;
 use CommissionFee\Operation\OperationTypeCashOut;
 use CommissionFee\ParametersToObjects;
-use CommissionFee\Currency;
+use CommissionFee\Currency\Currency;
 use CommissionFee\Operation\Operation;
 use CommissionFee\Customer;
 use PHPUnit\Framework\TestCase;

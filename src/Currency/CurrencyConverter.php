@@ -6,7 +6,7 @@
  * Time: 20.12
  */
 
-namespace CommissionFee;
+namespace CommissionFee\Currency;
 
 use CommissionFee\Operation\Operation;
 

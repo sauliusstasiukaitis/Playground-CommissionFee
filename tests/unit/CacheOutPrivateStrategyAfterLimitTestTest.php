@@ -3,7 +3,7 @@
 namespace CommissionFeeTest\Unit;
 
 use CommissionFee\CommisssionFeeCalculateStrategy\CacheOutPrivateStrategyAfterLimit;
-use CommissionFee\Currency;
+use CommissionFee\Currency\Currency;
 use CommissionFee\Operation\Operation;
 use CommissionFee\Operation\OperationTypeCashOut;
 use PHPUnit\Framework\TestCase;
