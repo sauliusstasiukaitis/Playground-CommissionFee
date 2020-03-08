@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 // @ToDo: add more tests to cover every case.
 // So it would be clear from test that cache in is failing for a company without looking to acceptance test failure.
-class CommissionFeeCalculatorTest extends TestCase
+class CommissionFeeCalculatorDefaultCurrencyTest extends TestCase
 {
     private $vfsStream;
 
