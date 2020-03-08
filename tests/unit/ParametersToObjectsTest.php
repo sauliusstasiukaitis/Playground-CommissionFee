@@ -39,7 +39,7 @@ class ParametersToObjectsTest extends TestCase
 
         $expectedUser = new Customer(1, 'natural');
 
-        $this->assertEquals($parametersToObjects->getUser(), $expectedUser);
+        $this->assertEquals($parametersToObjects->getCustomer(), $expectedUser);
     }
 
     public function testGeCompanyUser()
@@ -49,7 +49,7 @@ class ParametersToObjectsTest extends TestCase
 
         $expectedUser = new Customer(1, 'legal');
 
-        $this->assertEquals($parametersToObjects->getUser(), $expectedUser);
+        $this->assertEquals($parametersToObjects->getCustomer(), $expectedUser);
     }
 
     public function testGetOperationCashOut()

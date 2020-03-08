@@ -7,5 +7,5 @@ namespace CommissionFee\Storage;
  */
 interface StrategyDataEntityInterface
 {
-    public function __construct(int $userId, float $amount, int $transactionCount);
+    public function __construct(int $customerId, float $amount, int $transactionCount);
 }

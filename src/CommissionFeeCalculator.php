@@ -11,20 +11,20 @@ class CommissionFeeCalculator
     private CommissionFeeContextFactory $commissionFeeContextBuilder;
     private StrategyFactory $strategyFactory;
     private Currency $defaultCurrency;
-    private PrivateCacheOutStrategyDataRepository $userData;
+    private PrivateCacheOutStrategyDataRepository $customerData;
 
     public function __construct(
         ParametersToObjectsFactory $parametersToObjectsBuilder,
         CommissionFeeContextFactory $commissionFeeContextBuilder,
         StrategyFactory $strategyFactory,
         Currency $defaultCurrency,
-        PrivateCacheOutStrategyDataRepository $userData
+        PrivateCacheOutStrategyDataRepository $customerData
     ) {
         $this->parametersToObjectsBuilder = $parametersToObjectsBuilder;
         $this->commissionFeeContextBuilder = $commissionFeeContextBuilder;
         $this->strategyFactory = $strategyFactory;
         $this->defaultCurrency = $defaultCurrency;
-        $this->userData = $userData;
+        $this->customerData = $customerData;
     }
 
     /**
@@ -50,9 +50,9 @@ class CommissionFeeCalculator
 
             $context = $this->commissionFeeContextBuilder->create(
                 $parametersToObject->getDate(),
-                $parametersToObject->getUser(),
+                $parametersToObject->getCustomer(),
                 $parametersToObject->getOperation(),
-                $this->userData
+                $this->customerData
             );
 
             $strategy = $this->strategyFactory->create($context);

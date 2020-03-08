@@ -6,7 +6,7 @@ use CommissionFee\CommisssionFeeCalculateStrategy\CacheOutPrivateStrategy;
 use CommissionFee\Customer;
 
 /**
- * Simple way to store data in memory to keep track if user reach a week limit.
+ * Simple way to store data in memory to keep track if customer reach a week limit.
  * This implementation might be changed to store data in external system etc. Redis or Mysql
  * this would allow to track same user behavior in between calls.
  */
@@ -15,27 +15,27 @@ class PrivateCacheOutStrategyDataRepository implements StrategyDataRepositoryInt
     private array $customerData;
 
     public function addEntry(
-        Customer $user,
+        Customer $customer,
         float $amount,
         int $dateTimestamp
     ): void
     {
         $lastMondayTimestamp = $this->getPeriodBeginningTimestamp($dateTimestamp);
 
-        $userId = $user->getId();
-        if (!isset($this->customerData[$userId][$lastMondayTimestamp])) {
-            $this->createNewEntry($userId, $amount, $lastMondayTimestamp);
+        $customerId = $customer->getId();
+        if (!isset($this->customerData[$customerId][$lastMondayTimestamp])) {
+            $this->createNewEntry($customerId, $amount, $lastMondayTimestamp);
         } else {
-            $this->updateEntry($userId, $amount, $lastMondayTimestamp);
+            $this->updateEntry($customerId, $amount, $lastMondayTimestamp);
         }
     }
 
-    public function getDataByUserIdAndDate(int $userId, int $dateTimeStamp): PrivateCacheOutStrategyDataEntity
+    public function getDataByCustomerIdAndDate(int $customerId, int $dateTimeStamp): PrivateCacheOutStrategyDataEntity
     {
         $lastMondayTimestamp = $this->getPeriodBeginningTimestamp($dateTimeStamp);
 
         return
-            $this->customerData[$userId][$lastMondayTimestamp] ??
+            $this->customerData[$customerId][$lastMondayTimestamp] ??
             new PrivateCacheOutStrategyDataNullEntity();
     }
 
@@ -44,16 +44,16 @@ class PrivateCacheOutStrategyDataRepository implements StrategyDataRepositoryInt
         return CacheOutPrivateStrategy::getPeriodBeginningTimestamp($timeStamp);
     }
 
-    private function createNewEntry(int $userId, float $amount, int $lastMondayTimestamp): void
+    private function createNewEntry(int $customerId, float $amount, int $lastMondayTimestamp): void
     {
-        $this->customerData[$userId][$lastMondayTimestamp] =
-            new PrivateCacheOutStrategyDataEntity($userId, $amount, 1);
+        $this->customerData[$customerId][$lastMondayTimestamp] =
+            new PrivateCacheOutStrategyDataEntity($customerId, $amount, 1);
     }
 
-    private function updateEntry(int $userId, float $amount, int $lastMondayTimestamp): void
+    private function updateEntry(int $customerId, float $amount, int $lastMondayTimestamp): void
     {
         /** @var PrivateCacheOutStrategyDataEntity $customerData */
-        $customerData = $this->customerData[$userId][$lastMondayTimestamp];
+        $customerData = $this->customerData[$customerId][$lastMondayTimestamp];
         $customerData->increaseTransactionCount(1);
         $customerData->increaseAmount($amount);
     }

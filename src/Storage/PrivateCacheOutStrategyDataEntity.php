@@ -4,20 +4,20 @@ namespace CommissionFee\Storage;
 
 class PrivateCacheOutStrategyDataEntity implements StrategyDataEntityInterface
 {
-    private int $userId;
+    private int $customerId;
     private float $amount;
     private int $transactionCount;
 
-    public function __construct(int $userId, float $amount, int $transactionCount)
+    public function __construct(int $customerId, float $amount, int $transactionCount)
     {
-        $this->userId = $userId;
+        $this->customerId = $customerId;
         $this->amount = $amount;
         $this->transactionCount = $transactionCount;
     }
 
-    public function getUserId(): int
+    public function getCustomerId(): int
     {
-        return $this->userId;
+        return $this->customerId;
     }
 
     public function increaseAmount(float $amountToIncrease): void

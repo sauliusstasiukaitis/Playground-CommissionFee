@@ -9,16 +9,16 @@ class CommissionFeeContextFactory
 {
     public function create(
         int $dateTimeStamp,
-        Customer $user,
+        Customer $customer,
         Operation $operations,
-        PrivateCacheOutStrategyDataRepository $userData
+        PrivateCacheOutStrategyDataRepository $customerData
     ): CommissionFeeContext
     {
         return new CommissionFeeContext(
             $dateTimeStamp,
-            $user,
+            $customer,
             $operations,
-            $userData
+            $customerData
         );
     }
 }

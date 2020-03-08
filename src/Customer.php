@@ -12,33 +12,33 @@ namespace CommissionFee;
 class Customer
 {
     /** Private person */
-    const USER_TYPE_PRIVATE = 'natural';
+    const CUSTOMER_TYPE_PRIVATE = 'natural';
 
     /** Company */
-    const USER_TYPE_COMPANY = 'legal';
+    const CUSTOMER_TYPE_COMPANY = 'legal';
 
-    private int $userId;
+    private int $customerId;
 
-    private string $userType;
+    private string $customerType;
 
-    public function __construct(int $userId, string $userType)
+    public function __construct(int $customerId, string $customerType)
     {
-        $this->userId = $userId;
-        $this->userType = $userType;
+        $this->customerId = $customerId;
+        $this->customerType = $customerType;
     }
 
     public function getId()
     {
-        return $this->userId;
+        return $this->customerId;
     }
 
     public function isCompany()
     {
-        return $this->userType === self::USER_TYPE_COMPANY;
+        return $this->customerType === self::CUSTOMER_TYPE_COMPANY;
     }
 
     public function isPrivate()
     {
-        return $this->userType === self::USER_TYPE_PRIVATE;
+        return $this->customerType === self::CUSTOMER_TYPE_PRIVATE;
     }
 }

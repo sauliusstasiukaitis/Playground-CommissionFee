@@ -11,10 +11,10 @@ use CommissionFee\Customer;
 interface StrategyDataRepositoryInterface
 {
     public function addEntry(
-        Customer $user,
+        Customer $customer,
         float $amount,
         int $dateTimestamp
     ): void;
 
-    public function getDataByUserIdAndDate(int $userId, int $dateTimeStamp): StrategyDataEntityInterface;
+    public function getDataByCustomerIdAndDate(int $customerId, int $dateTimeStamp): StrategyDataEntityInterface;
 }
