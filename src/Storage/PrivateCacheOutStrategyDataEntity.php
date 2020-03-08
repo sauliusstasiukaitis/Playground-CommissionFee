@@ -1,8 +1,8 @@
 <?php
 
-namespace CommissionFee;
+namespace CommissionFee\Storage;
 
-class PrivateCacheOutStrategyDataEntity
+class PrivateCacheOutStrategyDataEntity implements StrategyDataEntityInterface
 {
     private int $userId;
     private float $amount;

@@ -1,17 +1,16 @@
 <?php
 
-namespace CommissionFee;
+namespace CommissionFee\Storage;
 
 use CommissionFee\CommisssionFeeCalculateStrategy\CacheOutPrivateStrategy;
+use CommissionFee\User;
 
 /**
  * Simple way to store data in memory to keep track if user reach a week limit.
  * This implementation might be changed to store data in external system etc. Redis or Mysql
  * this would allow to track same user behavior in between calls.
- *
- * @ToDo: implement interface.
  */
-class PrivateCacheOutStrategyDataRepository
+class PrivateCacheOutStrategyDataRepository implements StrategyDataRepositoryInterface
 {
     private array $customerData;
 

@@ -8,7 +8,7 @@ use CommissionFee\CommisssionFeeCalculateStrategy\StrategyFactory;
 use CommissionFee\Currency;
 use bovigo\vfs\vfsStream;
 use CommissionFee\ParametersToObjectsFactory;
-use CommissionFee\PrivateCacheOutStrategyDataRepository;
+use CommissionFee\Storage\PrivateCacheOutStrategyDataRepository;
 use PHPUnit\Framework\TestCase;
 
 class CommissionFeeCalculatorTest extends TestCase

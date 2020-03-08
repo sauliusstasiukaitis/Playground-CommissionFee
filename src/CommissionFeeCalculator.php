@@ -3,6 +3,7 @@
 namespace CommissionFee;
 
 use CommissionFee\CommisssionFeeCalculateStrategy\StrategyFactory;
+use CommissionFee\Storage\PrivateCacheOutStrategyDataRepository;
 
 class CommissionFeeCalculator
 {
