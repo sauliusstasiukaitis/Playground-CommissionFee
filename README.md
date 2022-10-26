@@ -45,3 +45,19 @@ Playground to implement [commision fee task](TASK.md)
 # Documentation
 
 Read [repository wiki for more details](https://github.com/stasiukaitis-saulius/Playground-CommissionFee/wiki/Documentation)
+
+# Ignore - Git MD test
+
+## Ignore - Git MD test
+
+#### Ignore - Git MD test
+
+##### Ignore - Git MD test
+
+###### Ignore - Git MD test
+
+####### Ignore - Git MD test
+
+####### Ignore - Git MD test
+
+
