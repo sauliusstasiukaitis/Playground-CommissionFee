@@ -1,0 +1,22 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		"config:base"
+	],
+	"packageRules": [{
+			"matchUpdateTypes": ["major"],
+			"labels": ["renovate-major"],
+			"prHourlyLimit": 5
+		},
+		{
+			"matchUpdateTypes": ["patch", "minor"],
+			"groupName": "dependencies (non-major)"
+		},
+		{
+			"matchDepTypes": ["devDependencies"],
+			"groupName": "devDependencies",
+			"automerge": true,
+			"prPriority": -1
+		}
+	]
+}
